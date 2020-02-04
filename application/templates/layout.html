@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %} - Application</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <!-- Scripts -->
+        <script src="https://kit.fontawesome.com/ab31ce7e18.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="text-center">
+        <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+                <div class="inner">
+                    <h3 class="masthead-brand">Application</h3>
+                    <nav class="nav nav-masthead justify-content-center">
+                        <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
+                        <!--
+                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Contact</a>
+                        -->
+                    </nav>
+                </div>
+            </header>
+        
+            <main role="main" class="inner cover">
+                {% block content %}{% endblock %}
+            </main>
+        
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                    <p class="d-inline px-1">Jeffrey Berube</p>
+                    <a class="px-1" href="https://www.linkedin.com/in/jeffrey-berube/" target="_blank">
+                        <i class="fab fa-linkedin pr-1"></i>
+                        LinkedIn
+                    </a>
+                    <a class="px-1" href="https://github.com/berubejd" target="_blank">
+                        <i class="fab fa-github-square pr-1"></i>
+                        GitHub
+                    </a>
+                    <!-- Based on Cover template for Bootstrap, by @mdo <https://twitter.com/mdo> -->
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
