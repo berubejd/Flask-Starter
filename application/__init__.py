@@ -1,9 +1,13 @@
-from flask import Flask, g
+from flask import Flask, g, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
 # Globally accessible libraries
 db = SQLAlchemy()
+
+
+def not_found(e):
+    return render_template("error.html"), 404
 
 
 def create_app(test_config=None):
@@ -18,6 +22,9 @@ def create_app(test_config=None):
 
     # Initialize Plugins
     db.init_app(app)
+
+    # Register Error Handlers
+    app.register_error_handler(404, not_found)
 
     # Register Blueprints
     from . import routes
