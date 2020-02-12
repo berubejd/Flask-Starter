@@ -21,11 +21,12 @@
                 <div class="inner">
                     <h3 class="masthead-brand">Application</h3>
                     <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
+                        {% set active_page = active_page|default('index') -%}
+                        <a class="nav-link{{ ' active' if active_page == 'index' else '' }}" href="{{ url_for('index') }}">Home</a>
                         <!--
-                        <a class="nav-link" href="#">Features</a>
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link{{ ' active' if active_page == 'features' else '' }}" href="{{ url_for('routes.features') }}">Features</a>
                         -->
+                        <a class="nav-link{{ ' active' if active_page == 'contact' else '' }}" href="{{ url_for('routes.contact') }}">Contact</a>
                     </nav>
                 </div>
             </header>

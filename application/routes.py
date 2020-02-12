@@ -27,3 +27,13 @@ def index():
         print(f"Found test row at id: {existing_test_row.id}")
 
     return render_template("index.html", heading=heading, message=message)
+
+
+@main_bp.route("/features", methods=["GET"])
+def features():
+    pass
+
+
+@main_bp.route("/contact", methods=["GET"])
+def contact():
+    return render_template("contact.html")
