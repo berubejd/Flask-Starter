@@ -1,16 +1,13 @@
-from flask import Blueprint, current_app as app, redirect, render_template, url_for
-
-from . import create_app
-from . import db
-from .models import Test
+from flask import Blueprint, current_app as app, render_template
+from ..models import db, Test
 
 
-main_bp = Blueprint(
+blueprint = Blueprint(
     "routes", __name__, template_folder="templates", static_folder="static"
 )
 
 
-@main_bp.route("/", methods=["GET"])
+@blueprint.route("/", methods=["GET"])
 def index():
     heading = "Welcome!"
     message = "Hello, world!"
@@ -29,11 +26,11 @@ def index():
     return render_template("index.html", heading=heading, message=message)
 
 
-@main_bp.route("/features", methods=["GET"])
+@blueprint.route("/features", methods=["GET"])
 def features():
     pass
 
 
-@main_bp.route("/contact", methods=["GET"])
+@blueprint.route("/contact", methods=["GET"])
 def contact():
     return render_template("contact.html")

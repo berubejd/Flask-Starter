@@ -1,4 +1,8 @@
-from . import db
+from flask_sqlalchemy import SQLAlchemy
+
+
+# Globally accessible libraries
+db = SQLAlchemy()
 
 
 class Test(db.Model):

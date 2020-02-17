@@ -1,24 +1,17 @@
-from flask import Flask, g, render_template
-from flask_sqlalchemy import SQLAlchemy
-
-
-# Globally accessible libraries
-db = SQLAlchemy()
+from flask import Flask, render_template
+from config import Config
+from .models import db
+from .views import main_blueprint
 
 
 def not_found(e):
     return render_template("error.html"), 404
 
 
-def create_app(test_config=None):
+def create_app():
     """Initialize the core application."""
     app = Flask(__name__, instance_relative_config=False)
-
-    if test_config is None:
-        app.config.from_object("config.Config")
-
-    else:
-        app.config.from_object("config.TestingConfig")
+    app.config.from_object(Config)
 
     # Initialize Plugins
     db.init_app(app)
@@ -27,9 +20,7 @@ def create_app(test_config=None):
     app.register_error_handler(404, not_found)
 
     # Register Blueprints
-    from . import routes
-
-    app.register_blueprint(routes.main_bp)
+    app.register_blueprint(main_blueprint)
     app.add_url_rule("/", endpoint="index")
 
     with app.app_context():
