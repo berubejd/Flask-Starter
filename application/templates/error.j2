@@ -1,0 +1,15 @@
+{% extends 'layout.j2' %}
+
+{% block title %}Oh noes, not again!{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <i class="fas fa-bomb" style="font-size: 20em;"></i>
+        <h1 class="lead display-4 mt-4">
+            Somebody set up us the bomb
+        </h1>
+        <h2>
+            <a class="" href="{{ url_for('index') }}">Let's get out of here!</a>
+        </h2>
+</div>
+{% endblock %}

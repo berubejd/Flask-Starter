@@ -1,0 +1,34 @@
+{% extends 'layout.j2' %}
+{% from "_helpers.j2" import render_field, render_submit_field %}
+
+{% set active_page = "login" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+  <div id="login-container" class="auth-container text-center m-auto">
+    <form method="POST">
+        <img class="mb-4" src="{{ url_for("static", filename="logo-192x192.png") }}" alt="Starter Logo" width="72" height="72">
+        <h3 id="title" class="text-center mb-4">Please sign in</h3>
+        {{ form.hidden_tag() }}
+        {{ render_field(form.username, label_visible=false, placeholder=form.username.label.text, autofocus="autofocus") }}
+        {{ render_field(form.password, label_visible=false, placeholder=form.password.label.text) }}
+        {{ render_submit_field(form.submit) }}
+    </form>
+    <p class="h4"> - or - </p>
+    <div id="social-buttons">
+        <a class="d-inline-block m-2" href="{{ url_for('facebook.login') }}">
+            <i class="fab fa-facebook-f"></i>
+            <p>Facebook</p>
+        </a>
+        <a class="d-inline-block m-2" href="{{ url_for('google.login') }}">
+            <i class="fab fa-google"></i>
+            <p>Google</p>
+        </a>
+    </div>
+    <p class="lead">
+        If you want to create a new account, log in with a social provider or go to the
+        <a href="{{ url_for("auth.register") }}">registration page</a>.
+    </p>
+  <div>
+{% endblock %}

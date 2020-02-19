@@ -1,0 +1,88 @@
+{% from "_helpers.j2" import messages %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %} - Application</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <!-- Scripts -->
+        <script src="https://kit.fontawesome.com/ab31ce7e18.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto text-center">
+                <div class="inner">
+                    <h3 class="masthead-brand">Application</h3>
+                    <nav class="nav nav-masthead justify-content-center">
+                        {% set active_page = active_page|default('index') -%}
+                        <div class="nav-item">
+                            <a class="nav-link {{ ' active' if active_page == 'index' else '' }}" href="{{ url_for('index') }}">Home</a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ ' active' if active_page == 'contact' else '' }}" href="{{ url_for('main.contact') }}">Contact</a>
+                        </div>
+                        {% if current_user.is_authenticated %}
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ ' active' if active_page == 'profile' else '' }}" href="#" }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome, {{ current_user.username }}!
+                            </a>
+                            <div class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
+                                <h6 class="dropdown-header no-shadow">Account Management</h6>
+                                <a class="dropdown-item" href="{{ url_for("auth.profile") }}">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ url_for("auth.logout")  }}">Log out</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="nav-item">
+                            <a class="nav-link {{ ' active' if active_page == 'login' else '' }}" href="{{ url_for('auth.login') }}">Sign in</a>
+                        </div>
+                        {% endif %}
+                    </nav>
+                </div>
+            </header>
+
+            {{ messages() }}
+
+            <main role="main" class="inner cover">
+                {% block content %}{% endblock %}
+            </main>
+        
+            <footer class="mastfoot mt-auto">
+                <div class="inner text-center">
+                    <p class="d-inline px-1">Jeffrey Berube</p>
+                    <a class="px-1" href="https://www.linkedin.com/in/jeffrey-berube/" target="_blank">
+                        <i class="fab fa-linkedin pr-1"></i>
+                        LinkedIn
+                    </a>
+                    <a class="px-1" href="https://github.com/berubejd" target="_blank">
+                        <i class="fab fa-github-square pr-1"></i>
+                        GitHub
+                    </a>
+                    <!-- Based on Cover template for Bootstrap, by @mdo <https://twitter.com/mdo> -->
+                </div>
+            </footer>
+
+            <!-- Bootstrap required JavaScript -->
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+            <!-- Show toast messages -->
+            <script>
+                $(document).ready(function(){
+                    $('.toast').toast('show');
+                });
+            </script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+{% extends 'layout.j2' %}
+{% from "_helpers.j2" import render_field, render_submit_field %}
+
+{% set active_page = "profile" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <div id="profile-container" class="auth-container text-center m-auto">
+        <h3 id="title" class="mb-3">Account Information</h1>
+        <p class="lead mb-3">You are logged in as <strong>{{ current_user.username }}</strong></p>
+        <div id="social-buttons" class="d-flex flex-column text-left w-100">
+            <div class="social-button-row d-inline-flex border-top py-2">
+                <div class="social-logo d-inline-block text-center my-auto">
+                    <img class="my-2 mx-1" src="{{ url_for("static", filename="logo-192x192.png") }}" alt="Starter Logo" width="50" height="50">
+                    <p class="mb-0">Application</p>
+                </div>
+                <div class="d-flex flex-column justify-content-center d-inline-block h-100 w-100 my-auto px-2">
+                    <p class="my-1">Password is{% if not current_user.has_password %} not{% endif %} set for your account.</p>
+                    <p class="my-1"><a class="btn btn-secondary btn-sm" href="{{ url_for("auth.password") }}">{% if not current_user.has_password %}Set a{% else %}Change{% endif %} password</a></p>
+                </div>
+            </div>
+            <div class="social-button-row d-inline-flex border-top border-bottom py-2">
+                <div class="social-logo d-inline-block text-center my-auto">
+                    <i class="fab fa-facebook-f"></i>
+                    <p class="mb-0">Facebook</p>
+                </div>
+                <div class="d-flex flex-row justify-content-center d-inline-block h-100 w-100 my-auto px-2">
+                    {% if current_user.oauth["facebook"] %}
+                    <div class="d-flex flex-column justify-content-center d-inline-block h-100 w-100 my-auto">
+                        <p class="my-1">Facebook User:</p>
+                        <p><strong>{{ current_user.oauth["facebook"].provider_user_login }}</strong></p>
+                    </div>
+                    <div class="my-auto">
+                        <p class="my-1 text-right"><a class="btn btn-danger btn-sm" href="{{ url_for("auth.unlink", provider="facebook") }}">Unlink</a></p>
+                    </div>
+                    {% else %}
+                    <div class="d-flex flex-column justify-content-center d-inline-block h-100 w-100 my-auto">
+                        <p class="my-1">No Facebook account link.</p>
+                        <p class="my-1"><a class="btn btn-success btn-sm" href="{{ url_for("facebook.login") }}">Link Facebook Account</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="social-button-row d-inline-flex border-bottom py-2">
+                <div class="social-logo d-inline-block text-center my-auto">
+                    <i class="fab fa-google"></i>
+                    <p class="mb-0">Google</p>
+                </div>
+                <div class="d-flex flex-row justify-content-center d-inline-block h-100 w-100 my-auto px-2">
+                    {% if current_user.oauth["google"] %}
+                    <div class="d-flex flex-column justify-content-center d-inline-block h-100 w-100 my-auto">
+                        <p class="my-1">Google user:</p>
+                        <p><strong>{{ current_user.oauth["google"].provider_user_login }}</strong></p>
+                    </div>
+                    <div class="my-auto">
+                        <p class="my-1 text-right"><a class="btn btn-danger btn-sm" href="{{ url_for("auth.unlink", provider="google") }}">Unlink</a></p>
+                    </div>
+                    {% else %}
+                    <div class="d-flex flex-column justify-content-center d-inline-block h-100 w-100 my-auto">
+                        <p class="my-1">No Google account link.</p>
+                        <p class="my-1"><a class="btn btn-success btn-sm" href="{{ url_for("google.login") }}">Link Google Account</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-lg btn-primary btn-block mt-3" href="{{ url_for("auth.logout") }}">Log out</a>
+    </div>
+{% endblock %}

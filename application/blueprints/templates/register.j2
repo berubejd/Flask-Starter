@@ -1,0 +1,23 @@
+{% extends 'layout.j2' %}
+{% from "_helpers.j2" import render_field, render_submit_field %}
+
+{% set active_page = "login" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="auth-container text-center m-auto">
+        <form method="POST">
+            <img class="mb-4" src="{{ url_for("static", filename="logo-192x192.png") }}" alt="Starter Logo" width="72" height="72">
+            <h3 id="title" class="text-center mb-4">Register</h3>
+            {{ form.hidden_tag() }}
+            {{ render_field(form.username, label_visible=false, placeholder=form.username.label.text, autofocus="autofocus") }}
+            {{ render_field(form.password, label_visible=false, placeholder=form.password.label.text) }}
+            {{ render_field(form.repeat_password, label_visible=false, placeholder=form.repeat_password.label.text) }}
+            {{ render_submit_field(form.submit) }}
+        </form>
+        <p class="lead pt-3">
+            <a href="{{ url_for('auth.login') }}">Already registered?  Sign in instead.</a>
+        </p>
+    </div>
+{% endblock %}
