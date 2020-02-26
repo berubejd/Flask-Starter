@@ -11,6 +11,8 @@ In order to provide social login functionality (OAuth), the project utilizes [Fl
 
 Although this example allows for the use of Facebook and Google logins, Flask-Dance offers a healthy list of blueprints and the ability to create custom blueprints, as well.
 
+Email delivery is provided for via SendGrid and currently integrated with the contact form only.
+
 The simple layout utilizes [Bootstrap 4](https://getbootstrap.com/) and borrows from the [Cover](https://getbootstrap.com/docs/4.4/examples/cover/) example.
 
 ## Screenshot
@@ -29,6 +31,6 @@ Most of the configuration is handled in [config.py](https://github.com/berubejd/
 - FLASK_APP = name (This should match what the 'application' directory is renamed to.)
 - FLASK_ENV = development (If you would like the app to provide log output and autoreload.)
 
-Access to provider's OAuth services will also require the appropriate client id and secrets to be set.
+Access to provider's OAuth services will also require the appropriate client id and secrets to be set.  Additionally, a SendGrid API key will also be required in the environment for contact emails to operate.
 
 Finally, in order for callbacks to complete, the server needs to be utilizing TLS.  Flask can be started with the following command in order to create temporary certificates:  ```flask run --cert=adhoc```

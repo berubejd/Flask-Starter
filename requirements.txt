@@ -7,3 +7,4 @@ Flask-WTF==0.14.3
 blinker==1.4
 PyMySQL==0.9.3
 pyOpenSSL==19.1.0
+sendgrid==6.1.2

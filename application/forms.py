@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, EqualTo
+from wtforms import StringField, PasswordField, SubmitField, TextField, TextAreaField
+from wtforms.validators import DataRequired, EqualTo, Email, Length
 from sqlalchemy.exc import IntegrityError
 from .models import db, User
 
@@ -56,3 +56,30 @@ class SetPasswordForm(FlaskForm):
     )
     repeat_password = PasswordField("Repeat Password")
     submit = SubmitField("Set Password")
+
+
+class ContactForm(FlaskForm):
+    name = TextField(
+        "Name",
+        validators=[
+            DataRequired("Please enter your name."),
+            Length(min=4, message="Please enter at least 4 chars"),
+        ],
+    )
+    email = TextField(
+        "Email",
+        validators=[
+            DataRequired("Please enter your email address."),
+            Email("Please enter a valid email address."),
+        ],
+    )
+    subject = TextField("Subject",
+        validators=[
+            DataRequired("Please enter a subject."),
+            Length(min=8, message="Please enter at least 8 chars for the subject"),
+        ],
+    )
+    message = TextAreaField(
+        "Message", validators=[DataRequired("Please write something for us")]
+    )
+    submit = SubmitField("Send")

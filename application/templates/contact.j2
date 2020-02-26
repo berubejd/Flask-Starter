@@ -1,9 +1,22 @@
 {% extends 'layout.j2' %}
+{% from "_helpers.j2" import render_field, render_submit_field %}
 
 {% set active_page = "contact" %}
 
 {% block title %}Contact{% endblock %}
 
 {% block content %}
-    <h1 class="text-center"><a href="mailto:berubejd@gmail.com">Jeffrey Berube</a></h1>
+    <div id="contact-container" class="text-center m-auto">
+        <div class="form">
+            <h2 class="text-center mb-4">Send a comment</h3>
+            <form action="" method="post" role="form" class="contactForm">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.name, label_visible=false, placeholder="Your Name") }}
+                {{ render_field(form.email, label_visible=false, placeholder="Your Email") }}
+                {{ render_field(form.subject, label_visible=false, placeholder=form.subject.label.text) }}
+                {{ render_field(form.message, label_visible=false, placeholder=form.message.label.text, rows=5) }}
+                {{ render_submit_field(form.submit, label="Send Message") }}
+            </form>
+        </div>
+    </div>
 {% endblock %}

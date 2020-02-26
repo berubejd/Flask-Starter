@@ -38,6 +38,10 @@ class Config:
     GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
     GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
 
+    # Sendgrid Config
+    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+    CONTACT_EMAIL = "berubejd@gmail.com"
+
 
 class TestingConfig(Config):
     DEBUG = True

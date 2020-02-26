@@ -78,7 +78,8 @@ a:hover {
     color: rgba(255, 255, 255, .5);
 }
 
-.auth-container {
+.auth-container,
+#contact-container {
     width: 400px;
 }
 
