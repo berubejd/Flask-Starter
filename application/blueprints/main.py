@@ -1,7 +1,19 @@
-from flask import Blueprint, current_app as app, render_template, session, redirect, flash, url_for
+from flask import (
+    Blueprint,
+    current_app as app,
+    render_template,
+    session,
+    redirect,
+    request,
+    flash,
+    url_for,
+)
+from flask_login import current_user
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from ..forms import ContactForm
+from ..utils import role_required
+
 
 blueprint = Blueprint("main", __name__)
 
@@ -31,12 +43,13 @@ def contact():
     if form.validate_on_submit():
         message = Mail(
             from_email=form.email.data,
-            to_emails=app.config['CONTACT_EMAIL'],
+            to_emails=app.config["CONTACT_EMAIL"],
             subject=form.subject.data,
-            html_content=form.message.data)
+            html_content=form.message.data,
+        )
 
         try:
-            sg = SendGridAPIClient(app.config['SENDGRID_API_KEY'])
+            sg = SendGridAPIClient(app.config["SENDGRID_API_KEY"])
             response = sg.send(message)
             flash("Your message has been sent. Thank you!")
 
@@ -45,5 +58,11 @@ def contact():
             print(e.message)
 
         return redirect(url_for("main.contact"))
-        
+
     return render_template("contact.j2", form=form)
+
+
+@blueprint.route("/admin", methods=["GET"])
+@role_required("admin")
+def admin():
+    return "Admin access approved"

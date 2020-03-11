@@ -1,7 +1,23 @@
-from flask import Blueprint, request, redirect, url_for, flash, render_template, session
-from flask_login import login_required, login_user, logout_user, current_user
-from application.models import db, User, OAuth
-from application.forms import RegisterForm, LoginForm, SetPasswordForm
+from flask import (
+    Blueprint,
+    request,
+    redirect,
+    url_for,
+    flash,
+    render_template,
+    session,
+    abort,
+)
+from flask_login import (
+    login_required,
+    fresh_login_required,
+    login_user,
+    logout_user,
+    current_user,
+)
+from ..models import db, User, OAuth
+from ..forms import RegisterForm, LoginForm, SetPasswordForm
+from ..utils import is_safe_url
 
 
 blueprint = Blueprint("auth", __name__, template_folder="templates")
@@ -15,6 +31,8 @@ def profile():
 
 @blueprint.route("/register", methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
     form = RegisterForm()
     if form.validate_on_submit():
         user = form.create_user()
@@ -27,7 +45,10 @@ def register():
 
 @blueprint.route("/login", methods=["GET", "POST"])
 def login():
-    session["next_url"] = request.args.get("next")
+    next = request.args.get("next")
+    if not is_safe_url(next):
+        return abort(400)
+    session["next_url"] = next
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
     form = LoginForm()
@@ -49,7 +70,7 @@ def logout():
 
 
 @blueprint.route("/password", methods=["GET", "POST"])
-@login_required
+@fresh_login_required
 def password():
     form = SetPasswordForm()
     if form.validate_on_submit():
@@ -62,7 +83,7 @@ def password():
 
 
 @blueprint.route("/merge", methods=["GET", "POST"])
-@login_required
+@fresh_login_required
 def merge():
     form = LoginForm(data={"username": request.args.get("username")})
     if form.validate_on_submit():

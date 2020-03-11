@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from config import Config
 from .blueprints import auth_blueprint, main_blueprint
-from .models import bcrypt, db, login_manager
+from .models import bcrypt, db, login_manager, seed_roles
 from .oauth import facebook_blueprint, google_blueprint
 
 
@@ -34,5 +34,6 @@ def create_app():
         from .models import User, OAuth
 
         db.create_all()
+        seed_roles()
 
     return app

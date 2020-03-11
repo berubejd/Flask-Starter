@@ -73,7 +73,8 @@ class ContactForm(FlaskForm):
             Email("Please enter a valid email address."),
         ],
     )
-    subject = TextField("Subject",
+    subject = TextField(
+        "Subject",
         validators=[
             DataRequired("Please enter a subject."),
             Length(min=8, message="Please enter at least 8 chars for the subject"),
